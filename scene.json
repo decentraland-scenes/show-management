@@ -1,0 +1,42 @@
+{
+  "display": {
+    "title": "Stage Tutorial",
+    "favicon": "favicon_asset",
+    "navmapThumbnail": "assets/thumbnail.png"
+  },
+  "owner": "",
+  "contact": {
+    "name": "vrglitch#d3ab",
+    "email": ""
+  },
+  "main": "bin/game.js",
+  "tags": [],
+  "scene": {
+    "parcels": [
+      "0,0"
+    ],
+    "base": "0,0"
+  },
+  "spawnPoints": [
+    {
+      "name": "spawn1",
+      "default": true,
+      "position": {
+        "x": [6,10],
+        "y": [1,1],
+        "z": [6,10]
+      },
+      "cameraTarget": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    }
+  ],
+  "requiredPermissions": [
+    "ALLOW_TO_TRIGGER_AVATAR_EMOTE"
+  ],
+  "featureToggles": {
+    "voiceChat": "disabled"
+  }
+}
