@@ -1,5 +1,7 @@
 # Show Management
 
+<img src="screenshot/screenshot.png" width="500"> 
+
 ## Description
 
 This scene demonstrates how to synchronize actions in the scene to specific moments in a video by implementing the [Show Management Library](https://github.com/decentraland/show-management#readme).
