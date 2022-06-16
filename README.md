@@ -13,6 +13,10 @@ This scene shows you:
 
 > Note: For details on how to store videos in servers that can be fetched from Decentraland, see [Video Streaming](https://github.com/decentraland-scenes/video-streaming)
 
+## Video Tutorial
+
+[https://www.youtube.com/watch?v=EdcDVDUZX4E](https://www.youtube.com/watch?v=EdcDVDUZX4E)
+
 ## Try it out
 
 **Install the CLI**
