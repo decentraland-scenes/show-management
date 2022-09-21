@@ -27,7 +27,7 @@ export function setBoardMessage(text: string) {
 
 export function hideBoard() {
   messageText.visible = false
-  messageText.value = undefined
+  messageText.value = ""
   CountDownTimer.terminate()
 }
 
@@ -38,11 +38,11 @@ export function hideBoard() {
 export function startNextShowCounter(runOfShow: showMgmt.ShowType[]) {
   log('STARTING NEW COUNTER, ', runOfShow)
   let currentTime = Date.now() / 1000
-  let nextShow: showMgmt.ShowType = undefined
+  let nextShow: showMgmt.ShowType|undefined
   for (let show of runOfShow) {
-    log(show.artist, ' STARTS IN ', show.startTime - currentTime)
-    if (show.startTime - currentTime > 0) {
-      if (nextShow) {
+    log(show.artist, ' STARTS IN ', show.startTime ? show.startTime - currentTime : "---")
+    if (show && show.startTime && show.startTime - currentTime > 0) {
+      if (nextShow && nextShow !== undefined && nextShow.startTime ) {
         if (show.startTime - currentTime < nextShow.startTime - currentTime) {
           nextShow = show
         }
@@ -65,7 +65,7 @@ export function startNextShowCounter(runOfShow: showMgmt.ShowType[]) {
     'IDENTIFIED NEXT SHOW, ',
     nextShow,
     ' STARTING IN ',
-    nextShow.startTime - currentTime
+    (nextShow.startTime) ? nextShow.startTime - currentTime : "---"
   )
 
   // contdown w nextShow
@@ -82,8 +82,10 @@ export class CountDownTimer implements ISystem {
   artistName: string = ''
   constructor(show: showMgmt.ShowType) {
     log('SHOW STARTS AT ', show.startTime, ' NOW IS ', Date.now() / 1000)
+    if(!show) throw new Error("show must not be null")
+    if(!show.startTime) throw new Error("show.startTime must not be null")
     this.timeToEvent = show.startTime - Date.now() / 1000
-    this.artistName = show.artist
+    this.artistName = show.artist ? show.artist : "" 
   }
 
   static createAndAddToEngine(show: showMgmt.ShowType): CountDownTimer {
@@ -161,9 +163,13 @@ currentShowText.outlineColor = Color3.Black()
 currentShowText.outlineWidth = 0.2
 engine.addEntity(currentShow)
 
-export function setArtistName(name: string) {
+export function setArtistName(name?: string) {
   currentShowText.visible = true
-  currentShowText.value = name
+  if(name && name !== undefined ){
+    currentShowText.value = name
+  }else{
+    currentShowText.value = ""
+  }
 }
 
 export function hideArtistName() {

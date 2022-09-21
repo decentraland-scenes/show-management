@@ -20,7 +20,7 @@ if(logHandlerAnimation) logHandlerAnimation.setLevel(showMgmt.LogLevel.TRACE)
 export const SHOW_MGR = new showMgmt.ShowManager()
 SHOW_MGR.showSchedule.setData( showData )
 
-let currentVideoTexture
+let currentVideoTexture:VideoTexture
 SHOW_MGR.addStopShowListeners( (event:showMgmt.StopShowEvent)=>{
   logger.debug("SHOW_MGR.addStopShowListeners"," fired",event)
   if (currentVideoTexture) { 
@@ -99,7 +99,7 @@ SHOW_MGR.actionMgr.registerHandler(
     "SAY",
     {
       matches(action: string,showActionMgr:showMgmt.ShowActionManager):boolean{ 
-        return showMgmt.actionStartsWith(action,this.getName(),0," ")
+        return this.name !== undefined && showMgmt.actionStartsWith(action,this.name,0," ")
       },
       decodeAction(action: string, showActionMgr: showMgmt.ShowActionManager):showMgmt.ActionParams<ActionTypeSay>{
         
@@ -110,8 +110,8 @@ SHOW_MGR.actionMgr.registerHandler(
         //join the params back together, all except the json one
         //it woudl be easier to just pass the text as part of the json 
         //this is to demonstrate how you can transform the parsed params if need be
-        for(let x=1;x<decoded.array.length;x++){
-          const txt = decoded.array[x]
+        for(let x=1;x<decoded.array!.length;x++){
+          const txt = decoded.array![x]
           //check for beginning of json
           if(txt.charAt(0)=='{'){ 
             break;            
@@ -127,8 +127,8 @@ SHOW_MGR.actionMgr.registerHandler(
         return  decoded;
       },
       process(action: showMgmt.ActionParams<ActionTypeSay>, showActionMgr: showMgmt.ShowActionManager): boolean {
-        const duration = action.params.duration ? action.params.duration : 1
-        ui.displayAnnouncement(action.params.text,duration)
+        const duration = action.params!.duration ? action.params!.duration : 1
+        if(action.params && action.params.text) ui.displayAnnouncement(action.params.text,duration)
 
         return true
       }

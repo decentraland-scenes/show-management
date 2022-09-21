@@ -53,7 +53,7 @@ export function createDanceAreas() {
 export class DanceSystem {
   length = 11
   timer = 2
-  routine = null
+  routine:PredefinedEmote|null|string = null
 
   routines: PredefinedEmote[] = [
     PredefinedEmote.ROBOT,
@@ -78,7 +78,7 @@ export class DanceSystem {
       this.timer -= dt
     } else {
       this.timer = this.length
-      if (this.routine == 'all') {
+      if (this.routine && this.routine == 'all') {
         let rand = Math.floor(Math.random() * (this.routine.length - 1) )
         if(this.routines[rand]){
           triggerEmote({ predefined: this.routines[rand] })
@@ -86,7 +86,7 @@ export class DanceSystem {
           log("warn array out of range")
         }
       } else {
-        triggerEmote({ predefined: this.routine })
+        if(this.routine ) triggerEmote({ predefined: (this.routine as any) })
       }
     }
   }
