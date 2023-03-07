@@ -17,6 +17,7 @@ ANIMATE dotLight13 {"animationName":"green", "loop":true}
 00:00:02,100 --> 00:00:02,500
 ANIMATE dotLight02 {"animationName":"green", "loop":true}
 ANIMATE dotLight12 {"animationName":"green", "loop":true}
+START_MODEL_WHITERABBIT_1
 
 4
 00:00:02,666 --> 00:00:02,933
@@ -27,6 +28,7 @@ ANIMATE dotLight11 {"animationName":"green", "loop":true}
 00:00:03,200 --> 00:00:03,600
 ANIMATE dotLight04 {"animationName":"green", "loop":true}
 ANIMATE dotLight10 {"animationName":"green", "loop":true}
+START_MODEL_WHITERABBIT_2
 
 6
 00:00:03,733 --> 00:00:04,133
