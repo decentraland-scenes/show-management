@@ -132,8 +132,10 @@ export let runwayPaths:any = {
 
 //export let portalAnims = ["Flower.Open", "Flower.Close"]
 
+const CLASSNAME = "RunwayAvatar"
 export class RunwayAvatar extends ShowEntityModel{
-
+ 
+    id:string
     start: number
     poseIndex = 0
     //FIXME EXTERNALIZE
@@ -143,19 +145,48 @@ export class RunwayAvatar extends ShowEntityModel{
     poseAnims:any
     portalPosition = -1
 
-    constructor(model:GLTFShape, invisible:boolean, start:number, position: TranformConstructorArgs, idelAnim?:string){
-        super("name-"+model.src,model,{
+    originalStart:number
+    originalPosition:TranformConstructorArgs
+
+    constructor(id:string,model:GLTFShape, invisible:boolean, start:number, position: TranformConstructorArgs, idelAnim?:string){
+        super(id+"."+model.src,model,{
             idleAnim:idelAnim
             ,startInvisible:invisible,
             transform:new Transform(position)
         } )
+        this.id = id
         this.start = start
+        this.originalStart = start
+        this.originalPosition = {position:position.position?.clone()}
+    } 
+
+    reset(){ 
+        const METHOD_NAME = "reset"
+        log(CLASSNAME,METHOD_NAME,this.id,'ENTRY')
+        //TODO move to parent class to reset all stuff
+        this.stopAllAnimations() 
+        this.start = this.originalStart
+        this.poseIndex = 0
+        this.runwayPosition = -1
+        this.portalPosition = -1
+     
+        const transform = this.entity.getComponent(Transform)
+        
+        if(this.originalPosition.position){
+            transform.position.copyFrom(this.originalPosition.position)
+        }
+            
+        if(this.entity.hasComponent(utils.FollowCurvedPathComponent)) this.entity.removeComponent(utils.FollowCurvedPathComponent)
     }
 
     startModel(sequence:string[]){
-        this.appear()
+        const METHOD_NAME = "startModel"
+        log(CLASSNAME,METHOD_NAME,this.id,'ENTRY')
+
         //FIXME move into library the engine alive test
         if(!this.entity.alive) engine.addEntity(this.entity)
+
+        this.appear()
 
         this.walkAnim = sequence.splice(0, 1).toString()
         this.poseAnims = sequence
@@ -191,11 +222,12 @@ export class RunwayAvatar extends ShowEntityModel{
 
     runSequence(){
         const METHOD_NAME = "runSequence"
+        log(CLASSNAME,METHOD_NAME,this.id,'ENTRY')
         this.runwayPosition++
         if(this.runwayPosition < this.poseAnims.length){
             this.playAnimation(this.walkAnim, false,undefined,undefined,undefined,true)
-
-            log(METHOD_NAME,'RUNWAY POSITION IS', this.runwayPosition,this.poseIndex)
+ 
+            log(CLASSNAME,METHOD_NAME,this.id,'RUNWAY POSITION IS', this.runwayPosition,this.poseIndex)
 
             if(this.runwayPosition == 4){
                 let fdelay = new Entity()
@@ -212,7 +244,7 @@ export class RunwayAvatar extends ShowEntityModel{
             }
             this.entity.addComponentOrReplace(new utils.FollowCurvedPathComponent(runwayPaths[this.start][this.runwayPosition].path, runwayPaths[this.start][this.runwayPosition].duration, 30, true, false, ()=>{
                 if(this.runwayPosition == this.poseAnims.length - 1){ 
-                    log(METHOD_NAME,'remove model from engine')
+                    log(CLASSNAME,METHOD_NAME,this.id,'remove model from engine')
                     this.hide()
                     this.stopAllAnimations()
                     engine.removeEntity(this.entity)
@@ -221,11 +253,11 @@ export class RunwayAvatar extends ShowEntityModel{
                     this.playAnimation(this.poseAnims[this.poseIndex], true,undefined,undefined,undefined,true)
                     //athis.runSequence()
 
-                    log(METHOD_NAME,'pausing for pose',this.poseIndex, this.poseAnims[this.poseIndex], this.poseDuration[this.poseIndex])
+                    log(CLASSNAME,METHOD_NAME,this.id,'pausing for pose',this.poseIndex, this.poseAnims[this.poseIndex], this.poseDuration[this.poseIndex])
 
                     let ent = new Entity()
                     ent.addComponent(new utils.Delay(this.poseDuration[this.poseIndex],()=>{
-                        log(METHOD_NAME,'pose over',this.poseIndex, this.poseAnims[this.poseIndex], this.poseDuration[this.poseIndex])
+                        log(CLASSNAME,METHOD_NAME,this.id,'pose over',this.poseIndex, this.poseAnims[this.poseIndex], this.poseDuration[this.poseIndex])
                         this.poseIndex++
                         //engine.removeEntity(ent)
                         this.runSequence()

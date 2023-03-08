@@ -181,11 +181,13 @@ SHOW_MGR.actionMgr.extRunAction = (action:string)=>{
   case 'START_MODEL_WHITERABBIT_1':
     logger.debug("SHOW_MGR.actionMgr.extRunAction",action," fired") 
     model = SHOW_MGR.actionMgr.getShowEntityByName("model-whiterabbit-1")
+    model.reset()
     model.startModel(["Walk","Heart_With_Hands","Walk"])
     break;
   case 'START_MODEL_WHITERABBIT_2':
     logger.debug("SHOW_MGR.actionMgr.extRunAction",action," fired") 
     model = SHOW_MGR.actionMgr.getShowEntityByName("model-whiterabbit-2")
+    model.reset() 
     model.startModel(["Walk","Wave","Walk"])
     break;
   }
