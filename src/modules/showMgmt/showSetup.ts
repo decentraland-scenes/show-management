@@ -21,6 +21,17 @@ if(logHandlerAnimation) logHandlerAnimation.setLevel(showMgmt.LogLevel.TRACE)
 export const SHOW_MGR = new showMgmt.ShowManager()
 SHOW_MGR.showSchedule.setData( showData )
 
+function resetStage(){
+  logger.debug("SHOW_MGR.resetStage","ENTRY")
+  for(const p of ["model-whiterabbit-1","model-whiterabbit-2"]){
+    const model = SHOW_MGR.actionMgr.getShowEntityByName(p) 
+    if(model){
+      model.reset()
+      model.hide()
+    }
+  }
+}
+
 let currentVideoTexture:VideoTexture
 SHOW_MGR.addStopShowListeners( (event:showMgmt.StopShowEvent)=>{
   logger.debug("SHOW_MGR.addStopShowListeners"," fired",event)
@@ -29,7 +40,9 @@ SHOW_MGR.addStopShowListeners( (event:showMgmt.StopShowEvent)=>{
     currentVideoTexuture.playing = false
   }
   hideArtistName()   
+
 } )
+
 
  
 SHOW_MGR.addPlayVideoListeners( (event:showMgmt.PlayShowEvent)=>{
@@ -37,6 +50,7 @@ SHOW_MGR.addPlayVideoListeners( (event:showMgmt.PlayShowEvent)=>{
   
   hideBoard() 
  
+  resetStage()
    
   if(event.showData.id == -1){ 
     //   debugger 
