@@ -83,23 +83,27 @@ export enum RunwayCoord {
 
 //models/whiteRabbit_Anim.glb - Walk,Heart_With_Hands,Idle,Run,Wave
 
+
+const catwalckCube = new Entity
+catwalckCube.addComponent(new BoxShape())
+catwalckCube.addComponent(new Transform({position: new Vector3(8, 0, 10), scale: new Vector3(3, 1.421, 8)})) 
+engine.addEntity(catwalckCube) 
+
 const offset = 2
 // Coordinates for main Runway Walk
-const point1 = new Vector3(2,1,1+offset)
-const point2 = new Vector3(2,2,2+offset)
-const point3 = new Vector3(2,2,3+offset)
-const point4 = new Vector3(2,2,4+offset)
-const point5 = new Vector3(2,2,5+offset)
-const path1: Vector3[] = [point1, point2, point3, point4, point5]
+const point1 = new Vector3(12.9,0.725,2.89)
+const point2 = new Vector3(10.13,0.725,4.92) 
+const point3 = new Vector3(8,0.725,6.05)
+const point4 = new Vector3(8.16, 0.725, 13.28)
+const path1: Vector3[] = [point1, point2, point3, point4]
  
 // Coordinates for Return Walk
-const point6 = new Vector3(2,2,6+offset)
-const point7 = new Vector3(2,2,7+offset)
-const point8 = new Vector3(2,2,8+offset)
-const point9 = new Vector3(2,2,9+offset)
-const point10 = new Vector3(2,2,10+offset)
-const path2: Vector3[] = [point6, point7, point8, point9, point10]
+const point5 = new Vector3(8.16, 0.725, 13.28)
+const point6 = new Vector3(8,0.725,6.05)
+const point7 = new Vector3(5.81,0.725,5.19)
+const point8 = new Vector3(3.54, 0.725, 3.24)
 
+const path2: Vector3[] = [point5, point6, point7, point8]
 
 //model animation templates
 
@@ -108,11 +112,11 @@ export let runwayPaths:any = {
     //starting south
     0:{
         0:{
-            duration: 4.8,
-            path: path1
+            duration: 9,
+            path: path1  
         },
         1: {
-            duration: 4.8,
+            duration: 9,
             path: path2
         }
     },
