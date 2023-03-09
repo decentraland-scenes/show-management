@@ -112,11 +112,11 @@ export let runwayPaths:any = {
     //starting south
     0:{
         0:{
-            duration: 9,
+            duration: 6,
             path: path1  
         },
         1: {
-            duration: 9,
+            duration: 6,
             path: path2
         }
     },
@@ -246,9 +246,9 @@ export class RunwayAvatar extends ShowEntityModel{
                 }))
                 engine.addEntity(fdelay)
             }
-            this.entity.addComponentOrReplace(new utils.FollowCurvedPathComponent(runwayPaths[this.start][this.runwayPosition].path, runwayPaths[this.start][this.runwayPosition].duration, 30, true, false, ()=>{
-                if(this.runwayPosition == this.poseAnims.length - 1){ 
-                    log(CLASSNAME,METHOD_NAME,this.id,'remove model from engine')
+            this.entity.addComponentOrReplace(new utils.FollowCurvedPathComponent(runwayPaths[this.start][this.runwayPosition].path, runwayPaths[this.start][this.runwayPosition].duration, 60, true, false, ()=>{
+                if(this.runwayPosition == this.poseAnims.length - 1){  
+                    log(CLASSNAME,METHOD_NAME,this.id,'remove model from engine')  
                     this.hide()
                     this.stopAllAnimations()
                     engine.removeEntity(this.entity)
