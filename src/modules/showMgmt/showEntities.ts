@@ -142,14 +142,14 @@ SHOW_MGR.actionMgr.registerShowEntity("dotLight07",dotLight07)
 SHOW_MGR.actionMgr.registerShowEntity("dotLight08",dotLight08) 
 SHOW_MGR.actionMgr.registerShowEntity("dotLight09",dotLight09) 
 SHOW_MGR.actionMgr.registerShowEntity("dotLight10",dotLight10) 
-SHOW_MGR.actionMgr.registerShowEntity("dotLight11",dotLight11) 
+SHOW_MGR.actionMgr.registerShowEntity("dotLight11",dotLight11)  
 SHOW_MGR.actionMgr.registerShowEntity("dotLight12",dotLight12) 
 SHOW_MGR.actionMgr.registerShowEntity("dotLight13",dotLight13) 
 
 const whiterabbit1 = new RunwayAvatar("model-whiterabbit-1",new GLTFShape('models/whiteRabbit_Anim.glb'), true, RunwayCoord.SOUTH, startPositions[RunwayCoord.SOUTH],"Idle")
 SHOW_MGR.actionMgr.registerShowEntity(whiterabbit1.id,whiterabbit1) 
 
-const whiterabbit2 = new RunwayAvatar("model-whiterabbit-2",new GLTFShape('models/whiteRabbit_Anim.glb'), true, RunwayCoord.SOUTH, startPositions[RunwayCoord.SOUTH],"Idle")
+const whiterabbit2 = new RunwayAvatar("model-whiterabbit-2",new GLTFShape('models/whiteRabbit_Anim.glb'), true, RunwayCoord.NORTH, startPositions[RunwayCoord.NORTH],"Idle")
 SHOW_MGR.actionMgr.registerShowEntity(whiterabbit2.id,whiterabbit2) 
 
 SHOW_MGR.actionMgr.registerShowEntity("middle_lights",new showMgmt.DefineTargetGroup({name:"middle_lights",targets:[dotLight04,dotLight05,dotLight06]})) 

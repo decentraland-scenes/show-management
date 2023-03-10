@@ -68,8 +68,8 @@ export class RunwayAvatar
 
 //FIXME EXTERNALIZE
 export let startPositions =[
-    {position: new Vector3(1,1,1), scale: new Vector3(1,1,1)},
-    {position: new Vector3(1,2,10), scale: new Vector3(1,1,1)},
+    {position: new Vector3(1, 1, 1), scale: new Vector3(1,1,1)},
+    {position: new Vector3(1, 1, 1), scale: new Vector3(1,1,1)},
 ]
 
 //FIXME EXTERNALIZE
@@ -102,9 +102,13 @@ const point5 = new Vector3(8.16, 0.725, 13.28)
 const point6 = new Vector3(8,0.725,6.05)
 const point7 = new Vector3(5.81,0.725,5.19)
 const point8 = new Vector3(3.54, 0.725, 3.24)
-
 const path2: Vector3[] = [point5, point6, point7, point8]
 
+const path3: Vector3[] = [point8, point7, point6, point5]
+const path4: Vector3[] = [point4, point3, point2, point1]
+/*
+const path3 = path2.reverse()
+const path4 = path1.reverse()*/
 //model animation templates
 
 //FIXME EXTERNALIZE
@@ -112,11 +116,11 @@ export let runwayPaths:any = {
     //starting south
     0:{
         0:{
-            duration: 6,
-            path: path1  
+            duration: 4,
+            path: path1
         },
         1: {
-            duration: 6,
+            duration: 4,
             path: path2
         }
     },
@@ -124,12 +128,12 @@ export let runwayPaths:any = {
     //starting north
     1:{
         0:{
-            duration: 4.8,
-            path: path2
+            duration: 8,
+            path: path3
         },
         1: {
-            duration: 4.8,
-            path: path1
+            duration: 8,
+            path: path4
         }
     }
 }    
