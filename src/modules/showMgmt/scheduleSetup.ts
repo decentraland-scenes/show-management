@@ -43,7 +43,7 @@ export const shows: showMgmt.ShowType[] = [
     length: 28,  
   },
   { 
-    id: 2,
+    id: 2, 
     title: 'Demo Show2',
     artist: 'Demo Show2',
     link: `videos/tunnelVisuals.mp4`,

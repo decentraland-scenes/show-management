@@ -4,6 +4,7 @@ import * as showMgmt from '@dcl/show-management'
 import { videoMat } from "../videoScreens"
 import { hideArtistName, hideBoard, setArtistName, startNextShowCounter } from "../showStatusDisplays"
 import { isPreviewMode } from '@decentraland/EnvironmentAPI'
+import { RunwayAvatar } from './ext/runwayAvatar'
 
 //creating a logger for this file
 const logger:showMgmt.Logger = showMgmt.LoggerFactory.getLogger("MyScene.ShowSetup.ts")
@@ -20,6 +21,17 @@ if(logHandlerAnimation) logHandlerAnimation.setLevel(showMgmt.LogLevel.TRACE)
 export const SHOW_MGR = new showMgmt.ShowManager()
 SHOW_MGR.showSchedule.setData( showData )
 
+function resetStage(){
+  logger.debug("SHOW_MGR.resetStage","ENTRY")
+  for(const p of ["model-whiterabbit-1","model-whiterabbit-2"]){
+    const model = SHOW_MGR.actionMgr.getShowEntityByName(p) 
+    if(model){
+      model.reset()
+      model.hide()
+    }
+  }
+}
+
 let currentVideoTexture:VideoTexture
 SHOW_MGR.addStopShowListeners( (event:showMgmt.StopShowEvent)=>{
   logger.debug("SHOW_MGR.addStopShowListeners"," fired",event)
@@ -28,7 +40,9 @@ SHOW_MGR.addStopShowListeners( (event:showMgmt.StopShowEvent)=>{
     currentVideoTexuture.playing = false
   }
   hideArtistName()   
+
 } )
+
 
  
 SHOW_MGR.addPlayVideoListeners( (event:showMgmt.PlayShowEvent)=>{
@@ -36,6 +50,7 @@ SHOW_MGR.addPlayVideoListeners( (event:showMgmt.PlayShowEvent)=>{
   
   hideBoard() 
  
+  resetStage()
    
   if(event.showData.id == -1){ 
     //   debugger 
@@ -99,6 +114,7 @@ SHOW_MGR.actionMgr.registerHandler(
     "SAY",
     {
       matches(action: string,showActionMgr:showMgmt.ShowActionManager):boolean{ 
+        //log("sayxxx....",(this as showMgmt.ShowActionHandlerSupport<any>).getName())
         return this.name !== undefined && showMgmt.actionStartsWith(action,this.name,0," ")
       },
       decodeAction(action: string, showActionMgr: showMgmt.ShowActionManager):showMgmt.ActionParams<ActionTypeSay>{
@@ -168,11 +184,25 @@ const stopHandler:showMgmt.ShowStopAllActionHandler
 
 SHOW_MGR.actionMgr.extRunAction = (action:string)=>{
 
+  let model:RunwayAvatar
+  
   let applied = false
   switch(action){
     case 'OLD_WAY':
       logger.debug("SHOW_MGR.actionMgr.extRunAction","OLD_WAY fired") 
       applied = true
+    break;
+  case 'START_MODEL_WHITERABBIT_1':
+    logger.debug("SHOW_MGR.actionMgr.extRunAction",action," fired") 
+    model = SHOW_MGR.actionMgr.getShowEntityByName("model-whiterabbit-1")
+    model.reset()
+    model.startModel(["Walk","Heart_With_Hands","Walk"])
+    break;
+  case 'START_MODEL_WHITERABBIT_2':
+    logger.debug("SHOW_MGR.actionMgr.extRunAction",action," fired") 
+    model = SHOW_MGR.actionMgr.getShowEntityByName("model-whiterabbit-2")
+    model.reset() 
+    model.startModel(["Walk","Wave","Walk"])
     break;
   }
   return applied
